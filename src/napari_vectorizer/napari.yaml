@@ -6,9 +6,9 @@ visibility: public
 categories: ["Annotation", "Segmentation", "Acquisition"]
 contributions:
   commands:
-    - id: napari-vectorizer.make_magic_widget
-      python_name: napari_vectorizer:threshold_magic_widget
-      title: Make threshold magic widget
+    - id: napari-vectorizer.make_vectorization_widget
+      python_name: napari_vectorizer:label_vectorization_widget
+      title: Make label vectorization widget
   widgets:
-    - command: napari-vectorizer.make_magic_widget
-      display_name: Magic Threshold
+    - command: napari-vectorizer.make_vectorization_widget
+      display_name: Label Vectorization

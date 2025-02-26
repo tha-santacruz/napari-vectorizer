@@ -3,9 +3,9 @@ try:
 except ImportError:
     __version__ = "unknown"
 from ._widget import (
-    threshold_magic_widget,
+    label_vectorization_widget,
 )
 
 __all__ = (
-    "threshold_magic_widget",
+    "label_vectorization_widget",
 )

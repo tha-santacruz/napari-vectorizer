@@ -33,6 +33,8 @@ from typing import TYPE_CHECKING
 
 from magicgui import magic_factory
 from skimage.util import img_as_float
+from skimage.measure import find_contours
+from napari.layers import Shapes
 
 if TYPE_CHECKING:
     import napari
@@ -42,9 +44,21 @@ if TYPE_CHECKING:
 # and use auto_call=True so the function is called whenever
 # the value of a parameter changes
 @magic_factory(
-    threshold={"widget_type": "FloatSlider", "max": 1}, auto_call=True
+    tolerance={"widget_type": "FloatSpinBox", "value": 0.5, "min": 0.01, "max": 0.99}
 )
-def threshold_magic_widget(
-    img_layer: "napari.layers.Image", threshold: "float"
-) -> "napari.types.LabelsData":
-    return img_as_float(img_layer.data) > threshold
+def label_vectorization_widget(
+    label_layer: "napari.layers.Labels", tolerance: "float"
+) -> "napari.layers.Shapes":
+    contours = find_contours(label_layer.data, tolerance)
+    
+    return Shapes(contours, shape_type="polygon")
+
+# Uses the `autogenerate: true` flag in the plugin manifest
+# to indicate it should be wrapped as a magicgui to autogenerate
+# a widget.
+#@magicgui
+#def threshold_autogenerate_widget(
+#    img: "napari.types.ImageData",
+#    threshold: "float",
+#) -> "napari.types.LabelsData":
+#    return img_as_float(img) > threshold

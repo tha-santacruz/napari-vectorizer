@@ -6,25 +6,9 @@ visibility: public
 categories: ["Annotation", "Segmentation", "Acquisition"]
 contributions:
   commands:
-    - id: napari-vectorizer.make_container_widget
-      python_name: napari_vectorizer:ImageThreshold
-      title: Make threshold Container widget
     - id: napari-vectorizer.make_magic_widget
       python_name: napari_vectorizer:threshold_magic_widget
       title: Make threshold magic widget
-    - id: napari-vectorizer.make_function_widget
-      python_name: napari_vectorizer:threshold_autogenerate_widget
-      title: Make threshold function widget
-    - id: napari-vectorizer.make_qwidget
-      python_name: napari_vectorizer:ExampleQWidget
-      title: Make example QWidget
   widgets:
-    - command: napari-vectorizer.make_container_widget
-      display_name: Container Threshold
     - command: napari-vectorizer.make_magic_widget
       display_name: Magic Threshold
-    - command: napari-vectorizer.make_function_widget
-      autogenerate: true
-      display_name: Autogenerate Threshold
-    - command: napari-vectorizer.make_qwidget
-      display_name: Example QWidget

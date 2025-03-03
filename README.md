@@ -7,7 +7,7 @@
 [![codecov](https://codecov.io/gh/tha-santacruz/napari-vectorizer/branch/main/graph/badge.svg)](https://codecov.io/gh/tha-santacruz/napari-vectorizer)
 [![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-vectorizer)](https://napari-hub.org/plugins/napari-vectorizer)
 
-A plugin to convert label layers to vetor layers
+A plugin to convert label layers to vector layers
 
 ----------------------------------
 

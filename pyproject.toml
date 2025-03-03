@@ -1,7 +1,7 @@
 [project]
 name = "napari-vectorizer"
 dynamic = ["version"]
-description = "A plugin to convert label layers to vetor layers"
+description = "A plugin to convert label layers to vector layers"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [

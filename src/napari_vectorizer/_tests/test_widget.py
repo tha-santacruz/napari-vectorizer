@@ -1,15 +1,9 @@
 import numpy as np
+import pytest
 from napari.layers import Shapes
+from napari_vectorizer._widget import label_vectorization_widget
 
-from napari_vectorizer._widget import (
-    label_vectorization_widget,
-)
-
-
-# make_napari_viewer is a pytest fixture that returns a napari viewer object
-# you don't need to import it, as long as napari is installed
-# in your testing environment
-def test_label_vectorization_widget(make_napari_viewer):
+def test_label_vectorization_widget(make_napari_viewer, qtbot):
     # Create a napari viewer
     viewer = make_napari_viewer()
 
@@ -23,28 +17,26 @@ def test_label_vectorization_widget(make_napari_viewer):
     # Instantiate the widget
     widget = label_vectorization_widget()
 
-    # Execute widget function
-    vectorized_layer = widget(label_layer, 0.5, 0.5)
+    # Execute widget function (triggers worker)
+    widget(label_layer, 0.5, 0.5)
+
+    # Wait for the worker to finish
+    qtbot.wait_until(lambda: any(isinstance(layer, Shapes) for layer in viewer.layers), timeout=5000)
+
+    # Get the newly added Shapes layer
+    shapes_layer = next(layer for layer in viewer.layers if isinstance(layer, Shapes))
 
     # Ensure output is a Shapes layer
-    assert isinstance(
-        vectorized_layer, Shapes
-    ), "Output should be a Shapes layer"
+    assert isinstance(shapes_layer, Shapes), "Output should be a Shapes layer"
 
     # Ensure some shapes were detected and created
-    assert (
-        len(vectorized_layer.data) > 0
-    ), "Shapes layer should contain at least one shape"
+    assert len(shapes_layer.data) > 0, "Shapes layer should contain at least one shape"
 
     # Ensure shapes have correct properties
-    for shape in vectorized_layer.data:
-        assert (
-            shape.shape[1] == 2
-        ), "Each shape should contain (x, y) coordinates"
+    for shape in shapes_layer.data:
+        assert shape.shape[1] == 2, "Each shape should contain (x, y) coordinates"
 
     # Ensure assigned face color is a valid vispy color
-    assert (
-        vectorized_layer.face_color is not None
-    ), "Face color should be assigned"
+    assert shapes_layer.face_color is not None, "Face color should be assigned"
 
     print("All tests passed!")
